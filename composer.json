@@ -1,7 +1,7 @@
 {
-  "name": "atomicsmash/ultimate-mailchimp-plugin",
-  "description": "Ultimate Mailchimp Plugin",
-  "keywords": ["wordpress", "plugin", "dev", "MailChimp"],
+  "name": "atomicsmash/",
+  "description": "",
+  "keywords": ["wordpress", "plugin", "dev"],
   "homepage": "http://www.atomicsmash.co.uk/",
   "license": "MIT",
   "authors": [

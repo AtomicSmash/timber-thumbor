@@ -1,8 +1,8 @@
 <?php
 /**
- * Plugin Name:     Thumbor
+ * Plugin Name:     Timber Thumbor integration
  * Plugin URI:      atomicsmash.co.uk
- * Description:     Thumbor testing
+ * Description:     Thumbor integration with WordPress Timber
  * Author:          atomicsmash.co.uk
  * Author URI:      atomicsmash.co.uk
  * Version:         0.0.1
@@ -30,6 +30,8 @@ class Thumbor {
 
     public function resize_upload_through_thumbor( $image_array,$image_array2 ){
 
+        global $wp_version;
+
         $logger = new Logger( 'thumbor' );
         // ASTODO hash the filename by date
         $uploads_directory = wp_upload_dir();
@@ -40,7 +42,39 @@ class Thumbor {
 
             $logger->info( "Image DIR:" . $image_array['file'] );
             $logger->info( "Image URL:" . $image_array['url'] );
+
+
+            $args = array(
+                'timeout'     => 5,
+                'redirection' => 5,
+                'httpversion' => '1.0',
+                // 'user-agent'  => 'WordPress/' . $wp_version . '; ' . home_url(),
+                'blocking'    => true,
+                // 'headers'     => array(),
+                // 'cookies'     => array(),
+                'body'        => null,
+                'compress'    => false,
+                'decompress'  => true,
+                // 'sslverify'   => true,
+                'stream'      => false,
+                'filename'    => null
+            );
+
+            // $response = wp_remote_get( $image_array['url'], $args );
+            $response = wp_remote_get( 'http://wordpress-test.local/wp-content/uploads/2018/09/raspberry-ricotta-cake.jpg', $args );
+
+
+            if ( is_array( $response ) ) {
+                $logger->info( "IS array:" );
+
+                $header = $response['headers']; // array of http header lines
+                $body = $response['body']; // use the content
+            }
+
+            $logger->info( "wp_remote_get response:" , $response );
+
             $logger->info( "--------------------------------" );
+
 
         }
 
